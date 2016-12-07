@@ -40,12 +40,10 @@ public class  Transposition {
         if (s.length()%  dim != 0){
             b++;
         }
-
         char[][] decode = new char[b][dim];
         int z = 0;
         int y = 0;
         int cont = 0;
-
         StringBuilder result = new StringBuilder(s);
         int cont1 = 0;
         //El que calculam es que la matriu estigui ben colocada es a dir on em de colocar els velors 0;
@@ -88,11 +86,59 @@ public class  Transposition {
 
 
     static String cypher(String s, String key) {
+        int b = (int) Math.ceil(s.length() / (double) key.length());
+        int cont = 0;
+        int cont1 = 0;
+        int cont2=0;
+        char[][] code = new char[b][key.length()];
+        int z = 0;
+        int y = 0;
+        String result = "";
+        //Els arrais es per treura la ordenacio de la key
+        char[] order = new char[key.length()];
+        int[] pasw = new int[key.length()];
+       //feim el for per fikar la key dedins l'array
+        for (int i = 0; i <key.length() ; i++) {
+           order[i] = key.charAt(i);
+        }
+        //ordenam la key
+        Arrays.sort(order);
+        //amb aquets dos bucles el que feim es comperar la key ordenada i la key normal i ficar els valors dedins an array de ints
+        for (int i = 0; i < key.length(); i++) {
+            for (int j = 0; j < key.length(); j++) {
+                if (order[i]== key.charAt(j)){
+                    pasw[cont] = j;
+                    cont++;
+                   break;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(pasw));
+        for (int j = 0; j < b; j++) {
+            for (int k = 0; k < key.length(); k++) {
+                if (cont1 == s.length()) {
+                    code[z][pasw[y]] = 0;
+                    continue;
+                }
+                char c = s.charAt(cont1);
+                cont1++;
+                code[z][pasw[y]] = c;
+                y++;
+                System.out.println(Arrays.deepToString(code));
+            }
+            y = 0;
+            z++;
+        }
 
+        for (int i = 0; i < code[0].length; i++) {
+           for (char[] codifica : code) {
+                if (codifica[i] != 0) {
+                    result += codifica[i];
+                }
+            }
+        }
 
-
-
-        return null;
+        return result;
     }
 
     static String decypher(String s, String key) {
