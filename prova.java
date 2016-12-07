@@ -5,8 +5,8 @@ import java.util.Arrays;
  */
 public class prova {
     public static void main(String[] args) {
-        String s = "Lefeeaasi r. allis l'èaéaenvs xci dpi";
-        int dim = 7;
+        String s = "ACEGBDF";
+        int dim = 2;
         int b = (int) Math.ceil(s.length() / (double) dim);
         char[][] decode = new char[b][dim];
         int z = 0;
@@ -15,6 +15,7 @@ public class prova {
         String result = "";
         int rest1 = dim - (dim*b -s.length());
         System.out.println(rest1);
+
 
         for (int i = 0; i < dim ; i++) {
             for (int j = 0; j < b; j++) {
@@ -37,17 +38,19 @@ public class prova {
             y++;
 
 
+            result += (char[])decode[i];
         }
-        System.out.println(Arrays.deepToString(decode));
-        for (int i = 0; i < decode.length; i++) {
-            for (char[] codifica : decode) {
-                if (codifica[i] != 0) {
-                    result += codifica[i];
-                }
-            }
 
-
-        }
+//        System.out.println(Arrays.deepToString(decode));
+//        for (int i = 0; i < decode.length; i++) {
+//            for (char[] codifica : decode) {
+//                if (codifica[i] != 0) {
+//                    result += codifica[i];
+//                }
+//            }
+//
+//
+//        }
         System.out.println(result);
     }
 }

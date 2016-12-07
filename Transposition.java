@@ -35,21 +35,32 @@ public class  Transposition {
     }
 
     static String decypher(String s, int dim) {
-        int b = (int) Math.ceil(s.length() / (double) dim);
+       // calculam la dimecio de files que nesesitam
+        int b = s.length() /  dim;
+        if (s.length()%  dim != 0){
+            b++;
+        }
+
         char[][] decode = new char[b][dim];
         int z = 0;
         int y = 0;
         int cont = 0;
-        String result = "";
-        int rest1 = dim - (dim*b -s.length());
-//        System.out.println(rest1);
-        for (int i = 0; i < dim ; i++) {
-            for (int j = 0; j < b; j++) {
-                if (y==rest1 && z==(b-1)){
+
+        StringBuilder result = new StringBuilder(s);
+        int cont1 = 0;
+        //El que calculam es que la matriu estigui ben colocada es a dir on em de colocar els velors 0;
+        int zero = dim - (dim*b -s.length());
+
+        for (int i = 0; i < decode[0].length ; i++) {
+            for (int j = 0; j < decode.length; j++) {
+               //el que fa ñ'if seguent es que si l'array esta on em calculat antariorment ens vagi ficant el velor 0
+               //per tenir la matriu ben construida
+                if (y==zero && z==(b-1)){
                     decode[z][y] = 0;
-                    rest1++;
+                    zero++;
                     continue;
                 }
+                //comprobam si el  llarg de la frase sa acabat que ens fiqui valors 0
                 if (cont == s.length()) {
                     decode[z][y] = 0;
                     continue;
@@ -62,21 +73,25 @@ public class  Transposition {
             }
             z = 0;
             y++;
-
-
         }
+        // el que feim aqui es que ens valli lletgint en vertical i que si el valor es diferent a 0 mos ho vagi ficant dedins l'string
         for (int i = 0; i < decode.length; i++) {
-            for (char[] codifica : decode) {
-                if (codifica[i] != 0) {
-                    result += codifica[i];
+            for (int j = 0; j <decode[i].length ; j++) {
+                if (decode[i][j] != 0 ){
+                    result.setCharAt(cont1,(decode[i][j]));
+                    cont1++;
                 }
             }
         }
-        return result;
+        return result.toString();
     }
 
 
     static String cypher(String s, String key) {
+
+
+
+
         return null;
     }
 
