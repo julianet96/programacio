@@ -5,24 +5,19 @@ public class  Transposition {
     static String cypher(String s, int dim) {
         int b = (int) Math.ceil(s.length() / (double) dim);
         char[][] code = new char[b][dim];
-        int z = 0;
-        int y = 0;
         int cont = 0;
         String result = "";
 
         for (int j = 0; j < b; j++) {
             for (int k = 0; k < dim; k++) {
                 if (cont == s.length()) {
-                    code[z][y] = 0;
+                    code[j][k] = 0;
                     continue;
                 }
                 char c = s.charAt(cont);
                 cont++;
-                code[z][y] = c;
-                y++;
+                code[j][k] = c;
             }
-            y = 0;
-            z++;
         }
         for (int i = 0; i < code[0].length; i++) {
             for (char[] codifica : code) {
@@ -41,8 +36,6 @@ public class  Transposition {
             b++;
         }
         char[][] decode = new char[b][dim];
-        int z = 0;
-        int y = 0;
         int cont = 0;
         StringBuilder result = new StringBuilder(s);
         int cont1 = 0;
@@ -53,24 +46,21 @@ public class  Transposition {
             for (int j = 0; j < decode.length; j++) {
                //el que fa ñ'if seguent es que si l'array esta on em calculat antariorment ens vagi ficant el velor 0
                //per tenir la matriu ben construida
-                if (y==zero && z==(b-1)){
-                    decode[z][y] = 0;
+                if (i==zero && j==(b-1)){
+                    decode[j][i] = 0;
                     zero++;
                     continue;
                 }
                 //comprobam si el  llarg de la frase sa acabat que ens fiqui valors 0
                 if (cont == s.length()) {
-                    decode[z][y] = 0;
+                    decode[j][i] = 0;
                     continue;
                 }
                 char c = s.charAt(cont);
                 cont++;
-                decode[z][y] = c;
-                z++;
-
+                decode[j][i] = c;
             }
-            z = 0;
-            y++;
+
         }
         // el que feim aqui es que ens valli lletgint en vertical i que si el valor es diferent a 0 mos ho vagi ficant dedins l'string
         for (int i = 0; i < decode.length; i++) {
@@ -87,12 +77,9 @@ public class  Transposition {
 
     static String cypher(String s, String key) {
         int b = (int) Math.ceil(s.length() / (double) key.length());
-        int cont = 0;
         int cont1 = 0;
-        int cont2=0;
+        StringBuilder sb = new StringBuilder(key);
         char[][] code = new char[b][key.length()];
-        int z = 0;
-        int y = 0;
         String result = "";
         //Els arrais es per treura la ordenacio de la key
         char[] order = new char[key.length()];
@@ -104,40 +91,38 @@ public class  Transposition {
         //ordenam la key
         Arrays.sort(order);
         //amb aquets dos bucles el que feim es comperar la key ordenada i la key normal i ficar els valors dedins an array de ints
-        for (int i = 0; i < key.length(); i++) {
-            for (int j = 0; j < key.length(); j++) {
-                if (order[i]== key.charAt(j)){
-                    pasw[cont] = j;
-                    cont++;
+        //Tambe comprovam que si el velor es repetit els hi dongui distints valors
+        for (int i = 0; i < sb.length(); i++) {
+            for (int j = 0; j < sb.length(); j++) {
+                if (order[i]== sb.charAt(j)){
+                   pasw[i] = j;
+                    sb.setCharAt(j, (char) 0);
                    break;
                 }
             }
         }
-        System.out.println(Arrays.toString(pasw));
+        //Ficam l'string dedins l'array
         for (int j = 0; j < b; j++) {
             for (int k = 0; k < key.length(); k++) {
                 if (cont1 == s.length()) {
-                    code[z][pasw[y]] = 0;
+                    code[j][k] = 0;
                     continue;
                 }
                 char c = s.charAt(cont1);
                 cont1++;
-                code[z][pasw[y]] = c;
-                y++;
-                System.out.println(Arrays.deepToString(code));
-            }
-            y = 0;
-            z++;
-        }
+                code[j][k] = c;
 
-        for (int i = 0; i < code[0].length; i++) {
-           for (char[] codifica : code) {
-                if (codifica[i] != 0) {
-                    result += codifica[i];
-                }
             }
         }
+        //El que feim en aquest for es treura els velors per columnes pero dugent l'ordre dels indexos.
+        for (int i = 0; i < key.length(); i++) {
+           for (int j = 0; j< b; j++) {
+               if (code[j][pasw[i]] != 0) {
+                   result += code[j][pasw[i]];
+               }
+           }
 
+        }
         return result;
     }
 
